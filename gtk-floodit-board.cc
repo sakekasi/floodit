@@ -8,7 +8,6 @@
 #include <cairomm/context.h>
 #include <glibmm/main.h>
 #include <cstring>
-#include <iostream>
 #include "gtk-floodit-board.hh"
 
 GtkFlooditBoard::GtkFlooditBoard()
@@ -204,7 +203,6 @@ void GtkFlooditBoard::toggle_grid_enabled()
 //button clicked handler functions
 void GtkFlooditBoard::set_active_navy()
 {
-        std::cout << this->grid_enabled << std::endl;
         this->set_active_color(NAVY);
 }
 

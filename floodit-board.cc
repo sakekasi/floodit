@@ -100,7 +100,7 @@ void FlooditBoard::h_set_active_color(color act, color new_act, int i, int j)
         }
 }
 
-color FlooditBoard::set_color(int i, int j, color c)
+void FlooditBoard::set_color(int i, int j, color c)
 {
         this->color_values[i][j] = c;
 }

@@ -34,7 +34,7 @@ protected:
 
         void h_set_active_color(color, color, int, int);
 
-        color set_color(int, int, color);
+        void set_color(int, int, color);
 };
 
 #endif
