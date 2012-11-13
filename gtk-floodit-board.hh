@@ -7,7 +7,6 @@
 #define TOP_YCOORD 0
 #define LEFT_XCOORD 0
 #define REFRESH_TIME_MILLIS 50
-#define L_WIDTH 1
 
 class GtkFlooditBoard: public FlooditBoard, public Gtk::DrawingArea
 {
@@ -45,14 +44,15 @@ protected:
 
         //drawing helper methods
         bool set_color(const Cairo::RefPtr<Cairo::Context>&, color);
-
-
         bool on_timeout();
+
+        void show_win();
+        void show_lose();
 
         int width;
         int height;
 
-//        const int l_width;
+        const int l_width;
         bool grid_enabled;
 };
 

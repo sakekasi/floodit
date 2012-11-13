@@ -22,12 +22,17 @@ protected:
         
         GtkFlooditBoard board;
 
+        int score;
+        color active_color;
+
         Gtk::Toolbar toolbar;
         Gtk::ToggleToolButton grid_on;
         Gtk::ToolButton reset;
+        Gtk::ToolButton score_button;
 
         Gtk::Button *color_buttons[6];
-        
+
+        void update_score();
 };
 
 #endif        

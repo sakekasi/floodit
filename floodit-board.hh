@@ -8,8 +8,12 @@
 #define RED 4
 #define PINK 5
 
+#define WIN -1
+#define LOSE -2
+
 #define BOARD_SIZE 12
 #define NUM_COLORS 6
+#define MAX_MOVES 22
 
 typedef int color;
 
@@ -27,6 +31,10 @@ public:
         color set_active_color(color);
 
         color (*(get_color_values)())[BOARD_SIZE];
+
+        int get_move_count();
+
+        void h_reset();
         
 protected:
 
@@ -34,7 +42,10 @@ protected:
 
         void h_set_active_color(color, color, int, int);
 
+
         void set_color(int, int, color);
+
+        int move_count;
 };
 
 #endif

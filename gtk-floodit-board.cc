@@ -7,11 +7,12 @@
  */
 #include <cairomm/context.h>
 #include <glibmm/main.h>
+#include <gtkmm/messagedialog.h>
 #include <cstring>
 #include "gtk-floodit-board.hh"
 
 GtkFlooditBoard::GtkFlooditBoard()
-        : Gtk::DrawingArea(), FlooditBoard(), grid_enabled(true)
+        : FlooditBoard(), Gtk::DrawingArea(), l_width(1), grid_enabled(true)
 {
 
 //set up signals
@@ -42,12 +43,12 @@ GtkFlooditBoard::~GtkFlooditBoard()
 
 bool GtkFlooditBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-        this->width = this->get_allocation().get_width();
-        this->height = this->get_allocation().get_height();
+        this->width = (this->get_allocation().get_width() < this->get_allocation().get_height())?
+                this->get_allocation().get_width() : this->get_allocation().get_height();
+        this->height = (this->get_allocation().get_width() < this->get_allocation().get_height())?
+                this->get_allocation().get_width() : this->get_allocation().get_height();
 
-        cr->set_line_width(L_WIDTH);
-        cr->set_source_rgb(1.0 , 1.0 , 1.0); //paint the canvas white
-        cr->paint();
+        cr->set_line_width(this->l_width);
         cr->save();
 
         this->fill_grid(cr);
@@ -65,17 +66,15 @@ bool GtkFlooditBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 bool GtkFlooditBoard::draw_grid(const Cairo::RefPtr<Cairo::Context>&cr)
 {
         cr->save();
-        cr->set_line_width(L_WIDTH);
+        cr->set_line_width(this->l_width);
         cr->set_line_cap(Cairo::LINE_CAP_SQUARE);
         cr->set_source_rgb(1 ,1 , 1);
 
         for(int i=0;i < this->width; i+=this->get_col_width()){
                 cr->save();
 
-                cr->set_line_width(L_WIDTH);
-
                 cr->move_to(i, TOP_YCOORD);
-                cr->line_to(i, this->height);
+                cr->line_to(i, BOARD_SIZE * this->get_row_height());
 
                 cr->stroke();
                 cr->restore();
@@ -83,10 +82,9 @@ bool GtkFlooditBoard::draw_grid(const Cairo::RefPtr<Cairo::Context>&cr)
 
         for(int i=0;i < this->height; i+=this->get_row_height()){
                 cr->save();
-                cr->set_line_width(L_WIDTH);
 
                 cr->move_to(LEFT_XCOORD, i);
-                cr->line_to(this->width, i);
+                cr->line_to(BOARD_SIZE* this->get_col_width(), i);
 
                 cr->stroke();
                 cr->restore();
@@ -203,31 +201,73 @@ void GtkFlooditBoard::toggle_grid_enabled()
 //button clicked handler functions
 void GtkFlooditBoard::set_active_navy()
 {
-        this->set_active_color(NAVY);
+        color result = this->set_active_color(NAVY);
+        if(result == WIN){
+                this->show_win();
+        } else if(result == LOSE){
+                this->show_lose();
+        }
 }
 
 void GtkFlooditBoard::set_active_blue()
 {
-        this->set_active_color(BLUE);
+        color result = this->set_active_color(BLUE);
+        if(result == WIN){
+                this->show_win();
+        } else if(result == LOSE){
+                this->show_lose();
+        }
 }
 
 void GtkFlooditBoard::set_active_green()
 {
-        this->set_active_color(GREEN);
+        color result = this->set_active_color(GREEN);
+        if(result == WIN){
+                this->show_win();
+        } else if(result == LOSE){
+                this->show_lose();
+        }
 }
 
 void GtkFlooditBoard::set_active_yellow()
 {
-        this->set_active_color(YELLOW);
+        color result = this->set_active_color(YELLOW);
+        if(result == WIN){
+                this->show_win();
+        } else if(result == LOSE){
+                this->show_lose();
+        }
 }
 
 void GtkFlooditBoard::set_active_red()
 {
-        this->set_active_color(RED);
+        color result = this->set_active_color(RED);
+        if(result == WIN){
+                this->show_win();
+        } else if(result == LOSE){
+                this->show_lose();
+        }
 }
 
 void GtkFlooditBoard::set_active_pink()
 {
-        this->set_active_color(PINK);
+        color result = this->set_active_color(PINK);
+        if(result == WIN){
+                this->show_win();
+        } else if(result == LOSE){
+                this->show_lose();
+        }
 }
 
+
+void GtkFlooditBoard::show_win()
+{
+        Gtk::MessageDialog win("You win!");
+        win.run();
+}
+
+void GtkFlooditBoard::show_lose()
+{
+        Gtk::MessageDialog lose("You lose.");
+        lose.run();
+}

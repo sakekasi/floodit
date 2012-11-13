@@ -13,13 +13,7 @@
 
 FlooditBoard::FlooditBoard()
 {
-        srand( time(NULL) );
-        
-        for(int i=0;i<BOARD_SIZE; i++){
-                for(int j=0;j<BOARD_SIZE; j++){
-                        this->color_values[i][j] = (rand() % 6);
-                }
-        }
+        this->h_reset();
 }
 
 
@@ -70,9 +64,24 @@ color FlooditBoard::set_active_color(color new_color)
         color active = this->get_active_color();
 
         if(new_color != active){
+                (this->move_count)++;
                 this->h_set_active_color(active,
                                          new_color,
                                          0,0);
+                if(this->max_percent() == 100){
+                        this->h_reset();
+                        return WIN;
+                }
+                
+                if(this->move_count == MAX_MOVES){
+                        int max_per = this->max_percent();
+                        this->h_reset();
+                        if(max_per == 100){
+                                return WIN;
+                        } else {
+                                return LOSE;
+                        }
+                }
         }
         return active;
 }
@@ -82,12 +91,17 @@ color (*(FlooditBoard::get_color_values)())[BOARD_SIZE]
         return this->color_values;
 }
 
+int FlooditBoard::get_move_count()
+{
+        return this->move_count;
+}
+
 
 //protected functions
 
 void FlooditBoard::h_set_active_color(color act, color new_act, int i, int j)
 {
-        if(i<0 || j<0 || i>BOARD_SIZE || j>BOARD_SIZE){
+        if(i<0 || j<0 || i>=BOARD_SIZE || j>=BOARD_SIZE){
                 return;
         }
         
@@ -100,7 +114,21 @@ void FlooditBoard::h_set_active_color(color act, color new_act, int i, int j)
         }
 }
 
+void FlooditBoard::h_reset()
+{
+        this->move_count = 0;
+        srand( time(NULL) );
+
+        for(int i=0; i<BOARD_SIZE; i++){
+                for(int j=0; j<BOARD_SIZE; j++){
+                        this->set_color(i,j,rand()%NUM_COLORS);
+                }
+        }
+}
+
+
 void FlooditBoard::set_color(int i, int j, color c)
 {
         this->color_values[i][j] = c;
 }
+

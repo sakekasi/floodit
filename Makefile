@@ -21,7 +21,7 @@ shared-library: gtk-floodit-board.o floodit-board.o main-window.o
 	$(CXX) -shared -Wl,-soname,libfloodit.so -o libfloodit.so  gtk-floodit-board.o floodit-board.o main-window.o $(CFLAGS)
 
 main: main.cc shared-library
-	$(CXX) $@.cc $(CFLAGS) -g -o main -L. -lfloodit $(HEADERS) $(LIBS) -lboost_system  -g
+	$(CXX) $@.cc $(CFLAGS) -g -o main -L. -lfloodit $(HEADERS) $(LIBS) -g
 
 .PHONY: clean
 clean:
