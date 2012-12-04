@@ -12,11 +12,11 @@
 
 int main(int argc, char **argv)
 {
-//        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
-        Gtk::Main main(argc, argv);
+  //        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+  Gtk::Main main(argc, argv);
         
-        MainWindow win;
+  MainWindow win;
         
-        main.run(win);
-        return 0;
+  main.run(win);
+  return 0;
 }

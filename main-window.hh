@@ -12,27 +12,27 @@
 
 class MainWindow : public Gtk::Window
 {
-public:
-        MainWindow();
-        virtual ~MainWindow();
+ public:
+  MainWindow();
+  virtual ~MainWindow();
         
-protected:
-        Gtk::VBox vbox;
-        Gtk::HBox hbox;
+ protected:
+  Gtk::VBox vbox;
+  Gtk::HBox hbox;
         
-        GtkFlooditBoard board;
+  GtkFlooditBoard board;
 
-        int score;
-        color active_color;
+  int score;
+  color active_color;
 
-        Gtk::Toolbar toolbar;
-        Gtk::ToggleToolButton grid_on;
-        Gtk::ToolButton reset;
-        Gtk::ToolButton score_button;
+  Gtk::Toolbar toolbar;
+  Gtk::ToggleToolButton grid_on;
+  Gtk::ToolButton reset;
+  Gtk::ToolButton score_button;
 
-        Gtk::Button *color_buttons[6];
+  Gtk::Button *color_buttons[6];
 
-        void update_score();
+  void update_score();
 };
 
 #endif        

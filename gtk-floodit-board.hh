@@ -10,50 +10,50 @@
 
 class GtkFlooditBoard: public FlooditBoard, public Gtk::DrawingArea
 {
-public:
-        GtkFlooditBoard();
-        GtkFlooditBoard(FlooditBoard*);
+ public:
+  GtkFlooditBoard();
+  GtkFlooditBoard(FlooditBoard*);
 
-        virtual ~GtkFlooditBoard();
+  virtual ~GtkFlooditBoard();
 
-        int get_width();
-        int get_height();
+  int get_width();
+  int get_height();
 
-        int get_col_width();
-        int get_row_height();
+  int get_col_width();
+  int get_row_height();
 
-        bool get_grid_enabled();
-        void toggle_grid_enabled();
+  bool get_grid_enabled();
+  void toggle_grid_enabled();
 
-        void set_active_navy();
-        void set_active_blue();
-        void set_active_green();
-        void set_active_yellow();
-        void set_active_red();
-        void set_active_pink();
+  void set_active_navy();
+  void set_active_blue();
+  void set_active_green();
+  void set_active_yellow();
+  void set_active_red();
+  void set_active_pink();
 
-protected:
+ protected:
 
-        //drawing
-        virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>&);
+  //drawing
+  virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>&);
 
-        //specific drawing methods
-        bool draw_grid(const Cairo::RefPtr<Cairo::Context>&);
-        bool fill_grid(const Cairo::RefPtr<Cairo::Context>&);
-        bool fill_square(const Cairo::RefPtr<Cairo::Context>&, int, int, color);
+  //specific drawing methods
+  bool draw_grid(const Cairo::RefPtr<Cairo::Context>&);
+  bool fill_grid(const Cairo::RefPtr<Cairo::Context>&);
+  bool fill_square(const Cairo::RefPtr<Cairo::Context>&, int, int, color);
 
-        //drawing helper methods
-        bool set_color(const Cairo::RefPtr<Cairo::Context>&, color);
-        bool on_timeout();
+  //drawing helper methods
+  bool set_color(const Cairo::RefPtr<Cairo::Context>&, color);
+  bool on_timeout();
 
-        void show_win();
-        void show_lose();
+  void show_win();
+  void show_lose();
 
-        int width;
-        int height;
+  int width;
+  int height;
 
-        const int l_width;
-        bool grid_enabled;
+  const int l_width;
+  bool grid_enabled;
 };
 
 
