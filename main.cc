@@ -7,12 +7,10 @@
  */
 
 #include <gtkmm/application.h>
-#include "gtk-floodit-board.hh"
-#include "main-window.hh"
+#include "main-window-inl.hh"
 
 int main(int argc, char **argv)
 {
-  //        Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
   Gtk::Main main(argc, argv);
         
   MainWindow win;

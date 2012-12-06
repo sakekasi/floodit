@@ -5,60 +5,23 @@
  *
  *Author: Saketh Kasibatla
  */
-#include "board-tree.hh"
+#include "board-tree-inl.hh"
 
 //public functions
 
-BoardTree_Node::BoardTree_Node(FlooditBoard* b)
-    :BoardTree_Node(new auto_ptr<FlooditBoard>(b))
+BoardTreeNode::BoardTreeNode(FlooditBoard* b)
+    :active_color_(b->active_color()), max_percent_(b->max_percent()),
+     children()
 {
 }
 
-BoardTree_Node::BoardTree_Node(auto_ptr<FlooditBoard> b)
+BoardTreeNode::BoardTreeNode(color c, int i)
+    :active_color_(c), max_percent_(i), children_()
 {
-  this->set_board(b);
 }
 
-
-void BoardTree_Node::set_board(auto_ptr<FlooditBoard> b)
-{
-  this->board = b;
-}
-
-void BoardTree_Node::set_board(FlooditBoard* b)
-{
-  this->set_board(new auto_ptr<FlooditBoard>(b));
-}
-
-
-color BoardTree_Node::get_active_color()
-{
-  return this->board->get_active_color();
-}
-
-int BoardTree_Node::max_percent()
-{
-  return this->board->max_percent();
-}
-
-
-void BoardTree_Node::add_child(auto_ptr<BoardTree_Node> n)
-{
-  this->children.push_back(n);
-}
-
-void BoardTree_Node::add_child(BoardTree_Node *n)
-{
-  this->add_child(new auto_ptr<BoardTree_Node>(n));
-}
-
-
-auto_ptr<BoardTree_Node> BoardTree_Node::operator[](int i)
-{
-  return this->get_child(i);
-}
-
-auto_ptr<BoardTree_Node> BoardTree_Node::get_child(int i)
-{
-  return this->children[i];
+BoardTreeNode::~BoardTreeNode(){
+  for(int i=0;i<this->children_.size(); i++){
+    delete this->children[i];
+  }
 }

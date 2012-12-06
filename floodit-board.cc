@@ -28,7 +28,7 @@ FlooditBoard::~FlooditBoard()
 
 //public methods
 
-int FlooditBoard::MaxPercent() const
+int FlooditBoard::max_percent() const
 {
   int counts[NUM_COLORS];
   int max_count = 0;
@@ -39,7 +39,7 @@ int FlooditBoard::MaxPercent() const
         
   for(int i=0;i<BOARD_SIZE;i++){
     for(int j=0;j<BOARD_SIZE;j++){
-      counts[this->color(i,j)]++;
+      counts[this->color_at(i,j)]++;
     }
   }
 
@@ -70,7 +70,7 @@ color FlooditBoard::set_active_color(color new_color)
     }
                 
     if(this->move_count_ == MAX_MOVES){
-      int max_percent = this->MaxPercent();
+      int max_percent = this->max_percent();
       this->Reset();
       if(max_percent == 100){
         return WIN;

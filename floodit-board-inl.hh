@@ -38,10 +38,10 @@ class FlooditBoard
   virtual ~FlooditBoard();
 
   //accessors
-  int MaxPercent() const;
-  inline color color(int, int) const;
+  int max_percent() const;
+  inline color color_at(int, int) const;
   inline color active_color() const;
-  inline color (*(color_values)())[BOARD_SIZE] const;
+  inline color (*(color_values)())[BOARD_SIZE];
   inline int move_count() const;
 
   color set_active_color(color);
@@ -61,7 +61,7 @@ class FlooditBoard
 //inline function definitions
 
 //public accessors
-inline color FlooditBoard::color(int i, int j) const
+inline color FlooditBoard::color_at(int i, int j) const
 {
   return this->color_values_[i][j];
 }
@@ -71,7 +71,7 @@ inline color FlooditBoard::active_color() const
   return this->color_values_[0][0];
 }
 
-inline color (*(FlooditBoard::get_color_values)())[BOARD_SIZE] const
+inline color (*(FlooditBoard::color_values)())[BOARD_SIZE]
 {
   return this->color_values_;
 }

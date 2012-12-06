@@ -5,13 +5,13 @@ CFLAGS= -Wall -pedantic -std=c++11
 
 all:main
 
-gtk-floodit-board.o : gtk-floodit-board.hh gtk-floodit-board.cc
+gtk-floodit-board.o : gtk-floodit-board-inl.hh gtk-floodit-board.cc
 	$(CXX) $*.cc -fPIC -c -O -o $@ $(HEADERS) $(LIBS) $(CFLAGS)
 
-floodit-board.o : floodit-board.hh floodit-board.cc
+floodit-board.o : floodit-board-inl.hh floodit-board.cc
 	$(CXX) $*.cc -fPIC -c -O -o $@ $(CFLAGS)
 
-main-window.o : main-window.hh main-window.cc
+main-window.o : main-window-inl.hh main-window.cc
 	$(CXX) $*.cc -fPIC -c -O -o $@ $(HEADERS) $(LIBS) $(CFLAGS)
 
 
