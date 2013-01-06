@@ -17,12 +17,92 @@
 
 FlooditBoard::FlooditBoard()
 {
+  this->color_values_ = new color*[BOARD_SIZE];
+  for(int i=0; i<BOARD_SIZE; i++){
+    this->color_values_[i] = new color[BOARD_SIZE];
+  }
+  
   this->Reset();
 }
 
+FlooditBoard::FlooditBoard(FlooditBoard* other){
+  if(this != other){
+    color ** color_values = new color*[BOARD_SIZE];
+
+    color_values = new color*[BOARD_SIZE];
+    for(int i=0; i<BOARD_SIZE; i++){
+      color_values[i] = new color[BOARD_SIZE];
+    }
+
+
+    for(int i=0;i<BOARD_SIZE; i++){
+      for(int j=0;j<BOARD_SIZE; j++){
+        color_values[i][j] = other->color_at(i,j);
+      }
+    }
+
+    this->color_values_ = color_values;
+    this->move_count_ = other->move_count();
+  }
+}
+  
+FlooditBoard::FlooditBoard(FlooditBoard* other, color active)
+    :FlooditBoard(other)
+{
+  this->set_active_color(active);
+}
 
 FlooditBoard::~FlooditBoard()
 {
+  for( int i=0; i<BOARD_SIZE; i++){
+    delete [] this->color_values_[i];
+  }
+  delete [] this->color_values_;
+}
+
+//operators
+FlooditBoard& FlooditBoard::operator=(const FlooditBoard& other){
+  if(this != &other){
+    //allocate new memory and copy the elements
+    color ** color_values = new color*[BOARD_SIZE];
+
+    color_values = new color*[BOARD_SIZE];
+    for(int i=0; i<BOARD_SIZE; i++){
+      color_values[i] = new color[BOARD_SIZE];
+    }
+
+
+    for(int i=0; i< BOARD_SIZE; i++){
+      for(int j=0; j< BOARD_SIZE; j++){
+        color_values[i][j] = other.color_at(i,j);
+      }
+    }
+
+    //deallocate old memory
+    delete [] this->color_values_;
+
+    //assign new memory to object
+    this->color_values_ = color_values;
+    this->move_count_ = other.move_count();
+  }
+
+  return *this;
+}
+
+bool FlooditBoard::operator==(const FlooditBoard& other){
+  if(this->move_count_ != other.move_count()){
+    return false;
+  }
+
+  for(int i=0; i< BOARD_SIZE; i++){
+    for(int j=0; j<BOARD_SIZE; j++){
+      if(this->color_at(i,j) != other.color_at(i,j)){
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
 
 

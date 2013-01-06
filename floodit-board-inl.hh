@@ -27,6 +27,7 @@
 
 #define BOARD_SIZE 12
 #define NUM_COLORS 6
+#define NULL_COLOR -1
 #define MAX_MOVES 22
 
 typedef int color;
@@ -35,13 +36,19 @@ class FlooditBoard
 {
  public:
   FlooditBoard();
+  FlooditBoard(FlooditBoard *);
+  FlooditBoard(FlooditBoard *, color);
   virtual ~FlooditBoard();
+
+  //operators
+  FlooditBoard& operator=(const FlooditBoard&);
+  bool operator==(const FlooditBoard&);
 
   //accessors
   int max_percent() const;
   inline color color_at(int, int) const;
   inline color active_color() const;
-  inline color (*(color_values)())[BOARD_SIZE];
+  inline color** color_values() const;
   inline int move_count() const;
 
   color set_active_color(color);
@@ -53,7 +60,7 @@ class FlooditBoard
   inline void set_color(int, int, color);
   void h_set_active_color(color, color, int, int);
   
-  color color_values_[BOARD_SIZE][BOARD_SIZE];
+  color** color_values_;
   int move_count_;
 };
 
@@ -71,7 +78,7 @@ inline color FlooditBoard::active_color() const
   return this->color_values_[0][0];
 }
 
-inline color (*(FlooditBoard::color_values)())[BOARD_SIZE]
+inline color** FlooditBoard::color_values() const
 {
   return this->color_values_;
 }

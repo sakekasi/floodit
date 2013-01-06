@@ -33,6 +33,9 @@ class MainWindow : public Gtk::Window
   Gtk::Button *color_buttons_[6];
 
   inline void update_score();
+
+  //TODO: write this
+  void solve_board();
 };
 
 //inline function definitions

@@ -7,11 +7,17 @@
  */
 #include "board-tree-inl.hh"
 
-//public functions
+//BoardTreeNode public
+//--------------------
+//constructors
+BoardTreeNode::BoardTreeNode()
+    :active_color_(NULL_COLOR), max_percent_(-1), children_()
+{
+}
 
 BoardTreeNode::BoardTreeNode(FlooditBoard* b)
     :active_color_(b->active_color()), max_percent_(b->max_percent()),
-     children()
+     children_()
 {
 }
 
@@ -20,8 +26,38 @@ BoardTreeNode::BoardTreeNode(color c, int i)
 {
 }
 
+//destructor
 BoardTreeNode::~BoardTreeNode(){
-  for(int i=0;i<this->children_.size(); i++){
-    delete this->children[i];
+  for(unsigned int i=0;i<this->children_.size(); i++){
+    delete this->children_[i];
   }
 }
+
+
+//FlooditPath public
+//------------------
+//constructors
+FlooditPath::FlooditPath(BoardTreeNode* n)
+    :nodes_()
+{
+  this->nodes_.push_back(n);
+}
+
+FlooditPath::FlooditPath(FlooditBoard* b)
+    :FlooditPath(new BoardTreeNode(b))
+{
+}
+
+FlooditPath::FlooditPath(FlooditPath* path, BoardTreeNode* end){
+  for(int i=0; i<path->num_steps() ; i++){
+    this->nodes_.push_back( (*path)[i] );
+  }
+  this->nodes_.push_back(end);
+}
+
+
+//destructor
+FlooditPath::~FlooditPath()
+{
+}
+
