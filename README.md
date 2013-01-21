@@ -6,7 +6,7 @@ an implementation of the game flood it in gtk.
 
 TODO:
 =====
-- implement board solving AI
+- implement interface for board solving AI
 - add documentation comments for classes and functions
 - add boilerplate gpl notification
 - remove abbreviations in variable names
