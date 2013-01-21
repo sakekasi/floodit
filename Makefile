@@ -4,12 +4,14 @@ LIBS = `pkg-config gtkmm-3.0 cairomm-1.0 --libs`
 CFLAGS=  -Wall -pedantic -std=c++11
 LIBFLAGS= -fPIC -c -O
 
+OBJECTS= floodit-board.o gtk-floodit-board.o main-window.o board-tree.o floodit-solver.o
+
 all:main
 
 gtk-floodit-board.o : floodit-board.o gtk-floodit-board-inl.hh gtk-floodit-board.cc
 	$(CXX) $*.cc -o $@ $(HEADERS) $(LIBS) $(LIBFLAGS) $(CFLAGS)
 
-main-window.o : gtk-floodit-board.o main-window-inl.hh main-window.cc
+main-window.o : gtk-floodit-board.o main-window-inl.hh main-window.cc floodit-solver.o
 	$(CXX) $*.cc -o $@ $(HEADERS) $(LIBS) $(LIBFLAGS) $(CFLAGS)
 
 floodit-board.o : floodit-board-inl.hh floodit-board.cc
@@ -25,7 +27,7 @@ floodit-solver.o : board-tree.o floodit-solver.hh floodit-solver.cc
 
 shared: shared-library
 shared-library: gtk-floodit-board.o floodit-board.o main-window.o board-tree.o floodit-solver.o
-	$(CXX) -shared -Wl,-soname,libfloodit.so -o libfloodit.so  gtk-floodit-board.o floodit-board.o main-window.o $(CFLAGS)
+	$(CXX) -shared -Wl,-soname,libfloodit.so -o libfloodit.so $(OBJECTS) $(CFLAGS)
 
 main: main.cc shared-library
 	$(CXX) $@.cc $(CFLAGS) -g -o main -L. -lfloodit $(HEADERS) $(LIBS) -g

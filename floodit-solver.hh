@@ -4,7 +4,7 @@
 #define STARTING_LEVEL 0
 #define EXPAND_LEVEL(X) X+3
 
-#define HEURISTIC_MULT 1
+#define HEURISTIC_MULT 0.5
 #define COST_MULT 1
 
 #include "floodit-board-inl.hh"

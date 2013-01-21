@@ -18,23 +18,23 @@ class MainWindow : public Gtk::Window
         
  protected:
   Gtk::VBox vbox_;
-  Gtk::HBox hbox_;
+  Gtk::HBox color_box_;
+  Gtk::HBox control_box_;
         
   GtkFlooditBoard board_;
 
   int score_;
   color active_color_;
 
-  Gtk::Toolbar toolbar_;
-  Gtk::ToggleToolButton grid_on_;
-  Gtk::ToolButton reset_;
-  Gtk::ToolButton score_button_;
+  Gtk::ToggleButton grid_on_;
+  Gtk::Button reset_;
+  Gtk::Button score_button_;
+  Gtk::Button solve_;
 
   Gtk::Button *color_buttons_[6];
 
   inline void update_score();
 
-  //TODO: write this
   void solve_board();
 };
 

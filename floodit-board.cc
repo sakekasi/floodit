@@ -13,7 +13,9 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include "floodit-board-inl.hh"
+
 
 FlooditBoard::FlooditBoard()
 {
@@ -129,7 +131,8 @@ int FlooditBoard::max_percent() const
     }
   }
 
-  return (max_count/ (BOARD_SIZE*BOARD_SIZE))*100;
+  return (((double) max_count)/(double (BOARD_SIZE*BOARD_SIZE)) )*100.0;
+  
 }
 
 

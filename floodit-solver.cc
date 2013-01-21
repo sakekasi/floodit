@@ -43,6 +43,7 @@ color FlooditSolver::next_step(){
 
 void FlooditSolver::GenerateLayers(BoardTreeNode *n, FlooditBoard *b,
                                    const int level, const int max){
+
   //set up this node
   n->set_active_color(b->active_color());
   n->set_max_percent(b->max_percent());
@@ -65,6 +66,8 @@ void FlooditSolver::GenerateLayers(BoardTreeNode *n, FlooditBoard *b,
 
     GenerateLayers(new_n, new_b, level+1, max);
     n->add_child(new_n);
+
+    delete new_b;
   }
 }
 
@@ -82,11 +85,12 @@ void FlooditSolver::FindFastestPath(){
     //pick the next path
     FlooditPath *next = this->AStarSelect(frontier);
 
-
+    //    printf("%d\n", next->end()->max_percent());// BUG: always zero
+        
     //check if we reached the goal
-    if(next->end()->max_percent() == 100){
+    if(next->end()->max_percent() >= 96/*100*/){ //TODO:fix so its 100
       this->best_path_ = next;
-
+      this->best_path_->pop();
       
       //delete allocated stuff
       for(unsigned int i=0; i<frontier->size() ; i++){

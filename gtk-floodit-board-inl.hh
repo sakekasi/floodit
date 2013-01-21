@@ -1,3 +1,4 @@
+
 /* This Source Code is subject to the terms of the GNU General
  * Public License 3.0. If a copy of the GPL was not distributed with this
  * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0.txt */
@@ -35,6 +36,8 @@ class GtkFlooditBoard: public FlooditBoard, public Gtk::DrawingArea
   inline void set_active_yellow();
   inline void set_active_red();
   inline void set_active_pink();
+
+  void set_active_color(color c);
 
  protected:
 
@@ -95,62 +98,32 @@ inline void GtkFlooditBoard::toggle_grid_enabled()
 //button action methods
 inline void GtkFlooditBoard::set_active_navy()
 {
-  color result = this->set_active_color(NAVY);
-  if(result == WIN){
-    this->ShowWin();
-  } else if(result == LOSE){
-    this->ShowLose();
-  }
+  this->set_active_color(NAVY);        
 }
 
 inline void GtkFlooditBoard::set_active_blue()
 {
-  color result = this->set_active_color(BLUE);
-  if(result == WIN){
-    this->ShowWin();
-  } else if(result == LOSE){
-    this->ShowLose();
-  }
+  this->set_active_color(BLUE);      
 }
 
 inline void GtkFlooditBoard::set_active_green()
 {
-  color result = this->set_active_color(GREEN);
-  if(result == WIN){
-    this->ShowWin();
-  } else if(result == LOSE){
-    this->ShowLose();
-  }
+  this->set_active_color(GREEN);    
 }
 
 inline void GtkFlooditBoard::set_active_yellow()
 {
-  color result = this->set_active_color(YELLOW);
-  if(result == WIN){
-    this->ShowWin();
-  } else if(result == LOSE){
-    this->ShowLose();
-  }
+  this->set_active_color(YELLOW);  
 }
 
 inline void GtkFlooditBoard::set_active_red()
 {
-  color result = this->set_active_color(RED);
-  if(result == WIN){
-    this->ShowWin();
-  } else if(result == LOSE){
-    this->ShowLose();
-  }
+  this->set_active_color(RED);
 }
 
 inline void GtkFlooditBoard::set_active_pink()
 {
-  color result = this->set_active_color(PINK);
-  if(result == WIN){
-    this->ShowWin();
-  } else if(result == LOSE){
-    this->ShowLose();
-  }
+  this->set_active_color(PINK);
 }
 
 //private

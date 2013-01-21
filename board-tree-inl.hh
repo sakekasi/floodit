@@ -71,6 +71,7 @@ class FlooditPath {
 
   //mutators
   inline void add(BoardTreeNode*);
+  inline void pop();
   inline BoardTreeNode* end();
 
   //operators
@@ -169,8 +170,12 @@ inline void FlooditPath::add(BoardTreeNode *n){
   this->nodes_.push_back(n);
 }
 
+inline void FlooditPath::pop(){
+  this->nodes_.erase(this->nodes_.begin());
+}
+
 inline BoardTreeNode* FlooditPath::end(){
-  return this->nodes_[this->nodes_.size()];
+  return this->nodes_[this->nodes_.size()-1];
 }
 
 //operators

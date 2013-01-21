@@ -17,12 +17,14 @@ GtkFlooditBoard::GtkFlooditBoard()
 
   //set up signals
         
-  Glib::signal_timeout().connect(sigc::mem_fun(*this, &GtkFlooditBoard::on_timeout),
-                                 REFRESH_TIME_MILLIS );
-#ifndef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
-  //Connect the signal handler if it isn't already a virtual method override:
-  signal_draw().connect(sigc::mem_fun(*this, &GameOfLife::on_draw), false);
-#endif //GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
+//     Glib::signal_timeout().connect(sigc::mem_fun(*this, &GtkFlooditBoard::on_timeout), REFRESH_TIME_MILLIS );
+// #ifndef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
+//   //Connect the signal handler if it isn't already a virtual method override:
+//   signal_draw().connect(sigc::mem_fun(*this, &GameOfLife::on_draw), false);
+// #endif //GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
+
+  this->signal_draw().connect(sigc::mem_fun(*this, &GtkFlooditBoard::on_draw), false);
+  
 
 }
 
@@ -171,4 +173,15 @@ bool GtkFlooditBoard::on_timeout()
     win->invalidate_rect(r, false);
   }
   return true;
+}
+
+void GtkFlooditBoard::set_active_color(color c){
+  color result = this->FlooditBoard::set_active_color(c);
+  this->queue_draw();
+
+  if(result == WIN){
+    this->ShowWin();
+  } else if(result == LOSE){
+    this->ShowLose();
+  }
 }
