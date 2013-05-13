@@ -1,36 +1,29 @@
 CXX = g++
-HEADERS = `pkg-config gtkmm-3.0 cairomm-1.0 --cflags`
-LIBS = `pkg-config gtkmm-3.0 cairomm-1.0 --libs`
-CFLAGS=  -Wall -pedantic -std=c++11
+CFLAGS=  -Wall -pedantic -std=c++11 -g
 LIBFLAGS= -fPIC -c -O
+SDLFLAGS= -lSDL -lSDL_gfx
 
-OBJECTS= floodit-board.o gtk-floodit-board.o main-window.o board-tree.o floodit-solver.o
+OBJECTS= floodit-board.o sdl-floodit-board.o sdl-buttons.o
 
 all:main
 
-gtk-floodit-board.o : floodit-board.o gtk-floodit-board-inl.hh gtk-floodit-board.cc
-	$(CXX) $*.cc -o $@ $(HEADERS) $(LIBS) $(LIBFLAGS) $(CFLAGS)
+sdl-floodit-board.o : floodit-board.o sdl-floodit-board-inl.hh sdl-floodit-board.cc
+	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS) $(SDLFLAGS)
 
-main-window.o : gtk-floodit-board.o main-window-inl.hh main-window.cc floodit-solver.o
-	$(CXX) $*.cc -o $@ $(HEADERS) $(LIBS) $(LIBFLAGS) $(CFLAGS)
+sdl-buttons.o : floodit-board.o sdl-buttons-inl.hh sdl-buttons.cc
+	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS) $(SDLFLAGS)
 
 floodit-board.o : floodit-board-inl.hh floodit-board.cc
-	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS)
-
-board-tree.o : floodit-board.o board-tree-inl.hh board-tree.cc
-	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS)
-
-floodit-solver.o : board-tree.o floodit-solver.hh floodit-solver.cc
 	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS)
 
 
 
 shared: shared-library
-shared-library: gtk-floodit-board.o floodit-board.o main-window.o board-tree.o floodit-solver.o
+shared-library: $(OBJECTS)
 	$(CXX) -shared -Wl,-soname,libfloodit.so -o libfloodit.so $(OBJECTS) $(CFLAGS)
 
 main: main.cc shared-library
-	$(CXX) $@.cc $(CFLAGS) -g -o main -L. -lfloodit $(HEADERS) $(LIBS) -g
+	$(CXX) $@.cc $(CFLAGS) -o main -L. -lfloodit $(HEADERS) $(SDLFLAGS)
 
 .PHONY: clean
 clean:

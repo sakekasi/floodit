@@ -15,26 +15,26 @@
 #ifndef FLOODIT_BOARD_H
 #define FLOODIT_BOARD_H
 
-#define NAVY 0
-#define BLUE 1
-#define GREEN 2
-#define YELLOW 3
-#define RED 4
-#define PINK 5
-
-#define WIN -1
-#define LOSE -2
+enum color {
+    NAVY = 0,
+    BLUE = 1,
+    GREEN = 2,
+    YELLOW = 3,
+    RED = 4,
+    PINK = 5,
+    NIL = -1,
+    WIN = -2,
+    LOSE = -3
+};
 
 #define BOARD_SIZE 12
 #define NUM_COLORS 6
 #define NULL_COLOR -1
 #define MAX_MOVES 22
 
-typedef int color;
-
 class FlooditBoard
 {
- public:
+public:
   FlooditBoard();
   FlooditBoard(FlooditBoard *);
   FlooditBoard(FlooditBoard *, color);
@@ -55,7 +55,7 @@ class FlooditBoard
 
   void Reset();
         
- protected:
+private:
 
   inline void set_color(int, int, color);
   void h_set_active_color(color, color, int, int);

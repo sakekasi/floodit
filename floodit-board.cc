@@ -172,7 +172,7 @@ void FlooditBoard::Reset()
 
   for(int i=0; i<BOARD_SIZE; i++){
     for(int j=0; j<BOARD_SIZE; j++){
-      this->set_color(i,j,rand()%NUM_COLORS);
+        this->set_color(i,j, static_cast<color>(rand()%NUM_COLORS));
     }
   }
 }
