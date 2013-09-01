@@ -25,3 +25,15 @@ BoardTreeNode::BoardTreeNode(FlooditBoard* other, color c)
 BoardTreeNode::~BoardTreeNode()
 {
 }
+
+
+double BoardPath::g_score()
+{
+    return top()->move_count() * HEURISTIC_WEIGHT;
+}
+
+double BoardPath::f_score()
+{
+    return g_score() + top()->heuristic();
+}
+
