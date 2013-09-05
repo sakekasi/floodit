@@ -27,14 +27,15 @@ private:
     BoardTreeNode* _children[NUM_COLORS];
 };
 
-class BoardPath : std::stack<BoardTreeNode*>
+class BoardPath : public std::stack<BoardTreeNode*>
 {
 public:
+    BoardPath(BoardTreeNode*);
     BoardPath(BoardPath*, BoardTreeNode*);
     
     double g_score(); //known cost from start
     double f_score(); //estimated cost with heuristic
-}
+};
 
 inline int BoardTreeNode::move_count()
 {
@@ -46,12 +47,12 @@ inline int BoardTreeNode::heuristic()
     return _board->max_percent();
 }
 
-inline color active_color()
+inline color BoardTreeNode::active_color()
 {
     return _board->active_color();
 }
 
-inline BoardTreeNode* child(int i)
+inline BoardTreeNode* BoardTreeNode::child(int i)
 {
     return _children[i];
 }

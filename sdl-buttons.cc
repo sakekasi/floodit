@@ -14,7 +14,7 @@
 using namespace std;
 
 SDLButtons::SDLButtons(SDL_Surface *s)
-    :_screen(s)
+    :enabled(true), _screen(s)
 {
     _listeners = new unordered_set<ButtonListener*>();
 }
@@ -26,12 +26,13 @@ SDLButtons::~SDLButtons()
 
 void SDLButtons::clicked( int x, int y )
 {
-    if( x >= BUTTON_LEFT_X && x <= WIDTH )
-        for( unordered_set<ButtonListener*>::iterator it = _listeners->begin();
-                 it != _listeners->end(); it++ )
-            (*it)->button_clicked(static_cast<color>(y / BUTTON_HEIGHT));
+    if(enabled){
+        if( x >= BUTTON_LEFT_X && x <= WIDTH )
+            for( unordered_set<ButtonListener*>::iterator it =
+                     _listeners->begin(); it != _listeners->end(); it++ )
+                (*it)->button_clicked(static_cast<color>(y / BUTTON_HEIGHT));
+    }
 }
-
 
 void SDLButtons::draw()
 {

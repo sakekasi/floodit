@@ -27,13 +27,12 @@ public:
     inline void add_listener(ButtonListener&);
 
     virtual void draw();    
+
+    bool enabled;
     
 private:
     SDL_Surface* _screen;
     std::unordered_set<ButtonListener*>* _listeners;
-
-    //drawing
-
 };
 
 inline void SDLButtons::add_listener(ButtonListener* b)
@@ -51,8 +50,5 @@ class ButtonListener
 public:
     virtual void button_clicked(color) =0;
 };
-
-
-
 
 #endif

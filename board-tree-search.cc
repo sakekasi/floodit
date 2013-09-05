@@ -1,6 +1,7 @@
 #include "board-tree-search.hh"
 
 #include <set>
+#include <cstdlib>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ BoardPath* lowest_value_path(set<BoardPath*> *frontier);
 bool goal(BoardPath *path);
 bool contains(set<BoardPath*> *set, BoardTreeNode *node);
 
-BoardPath* a_star_solve(const BoardTreeNode *root)
+BoardPath* a_star_solve(BoardTreeNode *root)
 {
     //visited: node set already evaluated
     set<BoardPath*> visited;
@@ -16,7 +17,7 @@ BoardPath* a_star_solve(const BoardTreeNode *root)
     //frontier: the set of nodes currently to be eval'd
     set<BoardPath*> frontier;
 
-    BoardPath *current = new BoardPath();
+    BoardPath *current = new BoardPath(root);
     current->push(root);
 
     frontier.insert(current);
@@ -30,18 +31,18 @@ BoardPath* a_star_solve(const BoardTreeNode *root)
         }
 
         //  move current from frontier to visited
-        frontier.remove(current);
+        frontier.erase(current);
         visited.insert(current);
         
         //  for each child:
         for(int i=0; i<NUM_COLORS; i++){
             if(current->top()->child(i)){
                 //if neighbor in closedset:
-                if(contains(&visited, current->top->child(i))){
+                if(contains(&visited, current->top()->child(i))){
                     continue;
                 } else {
-                    frontier.add(new BoardPath(current,
-                                               current->top->child(i)));
+                    frontier.insert(new BoardPath(current,
+                                                  current->top()->child(i)));
                 }
             }
         }

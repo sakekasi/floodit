@@ -4,6 +4,6 @@
 
 #include "board-tree-inl.hh"
 
-BoardPath* a_star_solve(const BoardTreeNode *root);
+BoardPath* a_star_solve(BoardTreeNode *root);
 
 #endif // BOARD_TREE_SEARCH_HH

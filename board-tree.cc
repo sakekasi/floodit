@@ -1,19 +1,17 @@
 #include "board-tree-inl.hh"
+#include <cstdlib>
 
 BoardTreeNode::BoardTreeNode(FlooditBoard* other)
 {
     _board = new FlooditBoard(other);
 
     for( int i=0; i<NUM_COLORS; i++){
-        if( (color) i == active_color() )
-            continue;
-        _children[i] = new BoardTreeNode(other, i);
+        if( (color) i == active_color() ){
+            _children[i] = NULL;
+        } else {
+            _children[i] = new BoardTreeNode(other, (color) i);
+        }
     }
-}
-
-BoardTreeNode::BoardTreeNode(FlooditBoard& other)
-    :BoardTreeNode(&other)
-{
 }
 
 BoardTreeNode::BoardTreeNode(FlooditBoard* other, color c)
@@ -24,8 +22,24 @@ BoardTreeNode::BoardTreeNode(FlooditBoard* other, color c)
 
 BoardTreeNode::~BoardTreeNode()
 {
+    for( int i=0; i<NUM_COLORS; i++){
+        if( _children[i] ){
+            delete _children[i];
+        }
+    }
 }
 
+
+BoardPath::BoardPath(BoardTreeNode *node)
+{
+    push(node);
+}
+
+BoardPath::BoardPath(BoardPath *path, BoardTreeNode *node)
+    :stack<BoardTreeNode*>(*path)
+{
+    push(node);
+}
 
 double BoardPath::g_score()
 {
