@@ -12,6 +12,7 @@
 #include "sdl-buttons-inl.hh"
 #include "board-tree-gen.hh"
 #include "board-tree-search.hh"
+#include "sdl-ai-hook-inl.hh"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ struct ai_args
     FlooditBoard *board;
 };
 
-static void
+static void*
 start_ai_solve(void *threadarg)
 {
     struct ai_args *arg = (struct ai_args *) threadarg;
@@ -39,7 +40,7 @@ start_ai_solve(void *threadarg)
     pthread_exit(NULL);
 }
 
-class MainAiListener 
+class MainAiListener : public AIListener
 {
 public:
     void path_calculated()
@@ -74,11 +75,11 @@ int main( int argc, char* argv[] )
     //CREATE GAME OBJECT
     SDLFlooditBoard game(screen);
     SDLButtons buttons(screen);
-    SDLAiHook ai_hook();
-    MainAiListener ml();
+    SDLAiHook ai_hook;
+    MainAiListener ml;
 
     buttons.add_listener(game);
-    ai_hook.add_listener(ml);
+    ai_hook.add_listener(&ml);
 
     SDL_Event event;
     bool gameRunning = true;
@@ -158,7 +159,7 @@ int main( int argc, char* argv[] )
                             args.board = (FlooditBoard*) &game;
 
                             pthread_t thread;
-                            int rc = pthread_create(&threads[tnum],
+                            int rc = pthread_create(&thread,
                                                     NULL,
                                                     start_ai_solve,
                                                     (void*) &args);

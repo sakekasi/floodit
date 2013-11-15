@@ -3,7 +3,7 @@
 using namespace std;
 
 SDLAiHook::SDLAiHook()
-    :_best_path(NULL)
+    :_best_path(nullptr)
 {
     _listeners = new unordered_set<AIListener*>();
 }
@@ -16,7 +16,7 @@ SDLAiHook::~SDLAiHook()
 void SDLAiHook::calculate_path(FlooditBoard *board)
 {
     BoardTreeNode *tree = generate_board_tree(board);
-    BoardTreePath *best_path = a_star_solve(tree);
+    BoardPath *best_path = a_star_solve(tree);
 
     _best_path = best_path;
 

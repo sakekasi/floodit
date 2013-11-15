@@ -22,10 +22,10 @@ public:
 
 private:
     std::unordered_set<AIListener*> *_listeners;
-    BoardTreePath *_best_path;
+    BoardPath *_best_path;
 };
 
-inline void add_listener(AIlistener ail)
+inline void SDLAiHook::add_listener(AIListener *ail)
 {
     _listeners->insert(ail);
 }

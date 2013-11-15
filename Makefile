@@ -4,7 +4,7 @@ LIBFLAGS= -fPIC -c -O
 SDLFLAGS= -lSDL -lSDL_gfx 
 PARFLAGS = -lpthread
 
-OBJECTS= floodit-board.o sdl-floodit-board.o sdl-buttons.o board-tree.o board-tree-gen.o board-tree-search.o
+OBJECTS= floodit-board.o sdl-floodit-board.o sdl-buttons.o board-tree.o board-tree-gen.o board-tree-search.o sdl-ai-hook.o
 
 all:main
 
@@ -24,6 +24,9 @@ sdl-buttons.o : floodit-board.o sdl-buttons-inl.hh sdl-buttons.cc
 	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS) 
 
 floodit-board.o : floodit-board-inl.hh floodit-board.cc
+	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS)
+
+sdl-ai-hook.o : sdl-ai-hook-inl.hh sdl-ai-hook.cc
 	$(CXX) $*.cc -o $@ $(LIBFLAGS) $(CFLAGS)
 
 

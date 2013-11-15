@@ -55,10 +55,10 @@ BoardPath* lowest_value_path(set<BoardPath*> *frontier)
 {
     BoardPath *ret = *(frontier->begin());
 
-    for(set<BoardPath*>::iterator it = frontier->begin() + 1;
+    for(set<BoardPath*>::iterator it = (++frontier->begin());
         it != frontier->end();
         it++){
-        if( (*it)->f_score < ret->f_score() ){
+        if( (*it)->f_score() < ret->f_score() ){
             ret = (*it);
         }
     }
@@ -71,16 +71,16 @@ bool goal(BoardPath *path)
     return path->top()->heuristic() == 100;
 }
 
-bool contains(set<BoardPath*> *set, BoardTreeNode *node)
+bool contains(set<BoardPath*> *s, BoardTreeNode *node)
 {
-    for(set<BoardPath*>::iterator it = set->begin();
-        it != set->end();
+    set<BoardPath*>::iterator it;
+    for(it = (s->begin());
+        it != s->end();
         it++){
         if( (*it)->top() == node ){
             return true;
         }
     }
-
     return false;
 }
 
